@@ -1,4 +1,5 @@
 {
   "secretkey":"",
-  "site": "http://hasthe.moe"
+  "site": "http://hasthe.moe",
+  "enableuploadform": false
 }

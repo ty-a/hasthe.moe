@@ -49,7 +49,7 @@ var upload = multer({ dest: 'public/i/', storage: storage, fileFilter: fileFilte
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('upload', { title: 'hasthe.moe', posted: false});
+  res.render('upload', { title: 'hasthe.moe', posted: false, enabled: config.enableuploadform});
 });
 
 router.post('/2', function(req, res, next) {
@@ -84,6 +84,10 @@ router.post('/2', function(req, res, next) {
 
 });
 router.post('/', function(req, res, next) {
+  if(!config.enableuploadform) {
+    res.json({status:false, reason:"The upload form is disabled."});
+    return;
+  }
   upload.single('file')(req, res, function(err) {
     if(typeof req.file == 'undefined') {
       // no file was given

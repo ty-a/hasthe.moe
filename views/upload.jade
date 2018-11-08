@@ -3,22 +3,24 @@ extends layout
 block content
 
   div(class='uk-width-medium uk-padding-small')
-    p This page allows you to upload images to https://hasthe.moe
-    
-    div(id='status', class='uk-alert-danger')
-      a(href="/", class="uk-link", hidden, id='image-link') View your file 
-      p(hidden, id='error-p')
-
-
-    div(class='js-upload uk-placeholder uk-text-center uk-flex-top')
-      span(uk-icon='icon:cloud-upload')
-      span(class='uk-text-middle') Select a file by clicking here or 
-      div(uk-form-custom)
-        input(type='file', name='file' multiple)
-        span(class='uk-link') by selecting them
-        
-    progress(id='js-progressbar', class='uk-progress', value='0', max='100', hidden)
+    if enabled
+      p This page allows you to upload images to https://hasthe.moe
       
+      div(id='status', class='uk-alert-danger')
+        a(href="/", class="uk-link", hidden, id='image-link') View your file 
+        p(hidden, id='error-p')
+
+      
+      div(class='js-upload uk-placeholder uk-text-center uk-flex-top')
+        span(uk-icon='icon:cloud-upload')
+        span(class='uk-text-middle') Select a file by clicking here or 
+        div(uk-form-custom)
+          input(type='file', name='file' multiple)
+          span(class='uk-link') by selecting them
+          
+      progress(id='js-progressbar', class='uk-progress', value='0', max='100', hidden)
+    else 
+      p The upload form is currently disabled. You can still use the /upload/2/ endpoint if you have a secret key.
     //form(action="/upload", method="post", enctype="multipart/form-data", class="uk-panel uk-panel-box uk-form" )
     //  div(class='uk-margin')
     //    input(type="file", name='file', class='uk-input')
