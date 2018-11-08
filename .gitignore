@@ -62,3 +62,5 @@ typings/
 
 # images
 public/i/*.*
+
+config/config.json

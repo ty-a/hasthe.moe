@@ -2,20 +2,33 @@ var express = require('express');
 var multer = require('multer');
 var fs = require('fs');
 var router = express.Router();
+const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var config = require('../config/config.json');
+function generateFileName() {
+    var out = "";
+    for(i = 0; i < 8; i++) {
+      out += letters.charAt(Math.random() * letters.length)
+    }
+
+    return out;
+
+
+}
 
 var storage = multer.diskStorage({
   destination: 'public/i',
   filename: function (req, file, cb) {
     console.log(file);
-    if(!fs.existsSync('public/i/' + file.originalname)) {
-      cb(null, file.originalname)
-    } else {
-      // file exists, so add a random number
-      var name = file.originalname.split(".");
-      var ext = name.pop();
-      name = name.join('.');
-      cb(null, name + '-' + Date.now() + '.' + ext)
+    var ext = file.originalname.split(".").pop();
+    var name = generateFileName() + '.' + ext;
+    while(true) {
+      if(!fs.existsSync('public/i/' + '.' + name)) {
+        break;
+      } else {
+        name = generateFileName() + '.' + ext;
+      }
     }
+    cb(null, name)
   }
 });
 
@@ -38,6 +51,38 @@ var upload = multer({ dest: 'public/i/', storage: storage, fileFilter: fileFilte
 router.get('/', function(req, res, next) {
   res.render('upload', { title: 'hasthe.moe', posted: false});
 });
+
+router.post('/2', function(req, res, next) {
+  upload.single('file')(req, res, function(err) {
+
+    if(req.body.secretkey != config.secretkey) {
+      res.json({status:false, reason:'Invalid secret key'});
+      return;
+    }
+
+    if(typeof req.file == 'undefined') {
+      // no file was given
+      res.json({status:false, reason: 'No file'});
+      return;
+    }
+    if(!err) {
+      res.send(config.site + '/i/' + req.file.filename);
+      return;
+    }
+    if(err instanceof multer.MulterError) {
+      throw new Error(err.message);
+    } else {
+      // is it safe to assume this is always the bad file type error?
+      if(err.message == "Only png, jpeg and gif images are allowed") {
+        res.json({reason:'Invalid file type', status:false})
+        return;
+      } else {
+        throw new Error(err.message);
+      }
+    }
+  });
+
+});
 router.post('/', function(req, res, next) {
   upload.single('file')(req, res, function(err) {
     if(typeof req.file == 'undefined') {
@@ -46,7 +91,7 @@ router.post('/', function(req, res, next) {
       return;
     }
     if(!err) {
-      res.json({reason:'', status:true, link:'/i/' + req.file.filename});
+      res.json({reason:'', status:true, link:config.site + '/i/' + req.file.filename});
       return;
     }
     if(err instanceof multer.MulterError) {
