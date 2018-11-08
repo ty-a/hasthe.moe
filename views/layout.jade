@@ -2,6 +2,24 @@ doctype html
 html
   head
     title= title
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.21/css/uikit.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.21/js/uikit.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.21/js/uikit-icons.min.js')
+    
   body
-    block content
+    nav(class='uk-navbar-container', uk-navbar)
+      div(class='uk-navbar-left')
+        ul(class='uk-navbar-nav')
+          li(class='uk-active')
+            a(href='/') hasthe.moe
+          li
+            a(href='/upload') Upload
+          li
+            a(href='/login') Login
+            
+    div(class="uk-flex uk-flex-center uk-flex-middle uk-background-muted uk-height-viewport" ) 
+      block content
+     
+    script(src='/js/upload.js', type='text/javascript')

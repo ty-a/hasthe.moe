@@ -4,10 +4,10 @@ var fs = require('fs');
 var router = express.Router();
 
 var storage = multer.diskStorage({
-  destination: 'public/images',
+  destination: 'public/i',
   filename: function (req, file, cb) {
     console.log(file);
-    if(!fs.existsSync('public/images/' + file.originalname)) {
+    if(!fs.existsSync('public/i/' + file.originalname)) {
       cb(null, file.originalname)
     } else {
       // file exists, so add a random number
@@ -32,7 +32,7 @@ var fileFilter = function(req, file, cb) {
   }
 }
 
-var upload = multer({ dest: 'public/images/', storage: storage, fileFilter: fileFilter});
+var upload = multer({ dest: 'public/i/', storage: storage, fileFilter: fileFilter});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -42,11 +42,11 @@ router.post('/', function(req, res, next) {
   upload.single('file')(req, res, function(err) {
     if(typeof req.file == 'undefined') {
       // no file was given
-      res.render('upload', { title: 'hasthe.moe', posted: true, status: false, reason:'No file provided.'});
+      res.json({status:false, reason: 'No file'});
       return;
     }
     if(!err) {
-      res.render('upload', { title: 'hasthe.moe', posted: true, status:true, link:'https://hasthe.moe/' + req.file.destination + '/' + req.file.filename});
+      res.json({reason:'', status:true, link:'/i/' + req.file.filename});
       return;
     }
     if(err instanceof multer.MulterError) {
@@ -54,7 +54,7 @@ router.post('/', function(req, res, next) {
     } else {
       // is it safe to assume this is always the bad file type error?
       if(err.message == "Only png, jpeg and gif images are allowed") {
-        res.render('upload', {status: false, reason:"invalid file type", title:"Upload an image", posted: true});
+        res.json({reason:'Invalid file type', status:false})
         return;
       } else {
         throw new Error(err.message);

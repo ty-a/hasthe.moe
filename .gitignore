@@ -61,4 +61,4 @@ typings/
 .next
 
 # images
-public/images/
+public/i/*.*

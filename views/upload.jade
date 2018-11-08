@@ -1,17 +1,26 @@
 extends layout
 
 block content
-  h1= title
-  if posted
-    if status
-      a(href=link) link to file
-    else
-      p File upload failed for the reason below.
-      p=reason
-  else
-    p This page allows you to upload images to https://hasthe.moe
 
-  form(action="/upload", method="post", enctype="multipart/form-data" )
-    input(type="file", name='file')
-    br
-    input(type="submit", value="submit")
+  div(class='uk-width-medium uk-padding-small')
+    p This page allows you to upload images to https://hasthe.moe
+    
+    div(id='status', class='uk-alert-danger')
+      a(href="/", class="uk-link", hidden, id='image-link') View your file 
+      p(hidden, id='error-p')
+
+
+    div(class='js-upload uk-placeholder uk-text-center uk-flex-top')
+      span(uk-icon='icon:cloud-upload')
+      span(class='uk-text-middle') Select a file by clicking here or 
+      div(uk-form-custom)
+        input(type='file', name='file' multiple)
+        span(class='uk-link') by selecting them
+        
+    progress(id='js-progressbar', class='uk-progress', value='0', max='100', hidden)
+      
+    //form(action="/upload", method="post", enctype="multipart/form-data", class="uk-panel uk-panel-box uk-form" )
+    //  div(class='uk-margin')
+    //    input(type="file", name='file', class='uk-input')
+    //  div(class='uk-margin')
+    //    input(type="submit", value="submit", class="uk-button uk-button-primary")

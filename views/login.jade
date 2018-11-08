@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  
+  div(class='uk-width-medium uk-padding-small')
+    form(method='post')
+      fieldset(class='uk-fieldset')
+        legend(class='uk-legend') Login 
+        
+        div(class='uk-margin')
+          div(class='uk-inline')
+            label(for='username') Username
+            input(class='uk-input uk-form-large', required, type='text', name='username')
+          
+          div(class='uk-margin')
+            div(class='uk-inline')
+              label(for='password') Password
+              input(class='uk-input uk-form-large', type='password', name='password', required)
+              
+          div(class='uk-margin')
+            button(type='submit', class='uk-button uk-button-primary uk-button-large uk-width-1-1') Login
+          
