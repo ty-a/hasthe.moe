@@ -11,7 +11,7 @@ block content
   else
     p This page allows you to upload images to https://hasthe.moe
 
-    form(method="post", enctype="multipart/form-data", action="/upload")
-      input(type="file", name="file")
-      br
-      input(type="submit", value="submit")
+  form(action="/upload", method="post", enctype="multipart/form-data" )
+    input(type="file", name='file')
+    br
+    input(type="submit", value="submit")

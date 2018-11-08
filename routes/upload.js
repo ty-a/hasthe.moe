@@ -1,7 +1,6 @@
 var express = require('express');
-var fs = require('fs');
 var multer = require('multer');
-
+var fs = require('fs');
 var router = express.Router();
 
 var storage = multer.diskStorage({
@@ -39,13 +38,13 @@ var upload = multer({ dest: 'public/images/', storage: storage, fileFilter: file
 router.get('/', function(req, res, next) {
   res.render('upload', { title: 'hasthe.moe', posted: false});
 });
-
-router.post('/', upload.none(), function(req, res, next) {
-  res.render('upload', { title: 'hasthe.moe', posted: true, status: false, reason:'No file provided.'});
-});
-
 router.post('/', function(req, res, next) {
   upload.single('file')(req, res, function(err) {
+    if(typeof req.file == 'undefined') {
+      // no file was given
+      res.render('upload', { title: 'hasthe.moe', posted: true, status: false, reason:'No file provided.'});
+      return;
+    }
     if(!err) {
       res.render('upload', { title: 'hasthe.moe', posted: true, status:true, link:'https://hasthe.moe/' + req.file.destination + '/' + req.file.filename});
       return;
