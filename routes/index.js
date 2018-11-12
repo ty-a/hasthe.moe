@@ -1,9 +1,11 @@
-var express = require('express');
-var router = express.Router();
+module.exports = function(passport, dbFunctions) {
+  var express = require('express');
+  var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'hasthe.moe' });
-});
+  /* GET home page. */
+  router.get('/', function(req, res, next) {
+    res.render('index', { title: 'hasthe.moe', isLoggedIn: req.isAuthenticated() });
+  });
 
-module.exports = router;
+  return router;
+}

@@ -1,5 +1,6 @@
 {
   "secretkey":"",
   "site": "http://hasthe.moe",
-  "enableuploadform": false
+  "enableuploadform": false,
+  "cookiesecret": "secret lol"
 }

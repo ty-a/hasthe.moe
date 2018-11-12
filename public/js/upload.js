@@ -1,5 +1,5 @@
 /* More or less shamelessly copied from
-https://getuikit.com/docs/upload with slight differences 
+https://getuikit.com/docs/upload with slight differences
 */
 var bar = document.getElementById('js-progressbar');
 
@@ -63,7 +63,7 @@ UIkit.upload('.js-upload', {
           document.getElementById('status').setAttribute('class', 'uk-alert-success')
           document.getElementById('image-link').removeAttribute('hidden');
         } else {
-          document.getElementById('error-p').text(resp.reason);
+          document.getElementById('error-p').textContent = resp.reason;
           document.getElementById('error-p').removeAttribute('hidden');
         }
 

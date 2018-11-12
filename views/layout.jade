@@ -16,8 +16,9 @@ html
             a(href='/') hasthe.moe
           li
             a(href='/upload') Upload
-          li
-            a(href='/login') Login
+          if !isLoggedIn
+            li
+              a(href='/login') Login
             
     div(class="uk-flex uk-flex-center uk-flex-middle uk-background-muted uk-height-viewport" ) 
       block content
