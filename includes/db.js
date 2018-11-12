@@ -25,7 +25,6 @@ module.exports = function(db) {
           }
 
           bcrypt.compare(password, row.userPassword, function(err, res) {
-            console.log(password, row.userPassword);
             if(res) { // match
               return done(null, {username: username, userId: row.userId});
             } else {

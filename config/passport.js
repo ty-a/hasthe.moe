@@ -9,7 +9,6 @@ module.exports = function(passport, dbFunctions) {
   ));
 
   passport.serializeUser(function(user, done) {
-    console.log(user);
     return done(null, user.userId);
   });
 

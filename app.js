@@ -17,10 +17,7 @@ let db = new sqlite3.Database('./db/db.sqlite3', function(err) {
   }
 });
 
-
-
 var dbFunctions = require('./includes/db.js')(db);
-dbFunctions.createUser("Ty", "awef");
 
 require('./config/passport.js')(passport, dbFunctions);
 
