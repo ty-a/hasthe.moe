@@ -66,3 +66,4 @@ public/i/*.*
 config/config.json
 
 db/db.sqlite3
+db/sessions.db

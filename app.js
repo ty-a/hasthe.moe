@@ -6,6 +6,7 @@ var logger = require('morgan');
 var passport = require('passport');
 var sqlite3 = require('sqlite3').verbose();
 var session = require('express-session');
+var SQLiteStore = require('connect-sqlite3')(session);
 var config = require('./config/config.json');
 
 var app = express();
@@ -35,9 +36,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
+  store: new SQLiteStore({dir:'./db/', db:'sessions.db'}),
   secret: config.cookiesecret,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    secure: false, // dev env is http, check into https with prod
+    maxAge: 1000 * 60 * 60 * 24 * 7 // one week
+  }
+
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
