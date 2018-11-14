@@ -46,7 +46,7 @@ module.exports = function(passport, dbFunctions, config) {
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
-    res.render('upload', { title: 'hasthe.moe', posted: false, enabled: config.enableuploadform, isLoggedIn: req.isAuthenticated()});
+    res.render('upload', { title: 'Upload', posted: false, enabled: config.enableuploadform, isLoggedIn: req.isAuthenticated()});
   });
 
   router.post('/2', function(req, res, next) {

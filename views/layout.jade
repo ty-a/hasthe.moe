@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title= title
+    title #{title} - hasthe.moe
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.21/css/uikit.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     
@@ -16,6 +16,8 @@ html
             a(href='/') hasthe.moe
           li
             a(href='/upload') Upload
+          li
+            a(href='/gallery') Gallery
           li
             a(href='/signup') Sign up
           if !isLoggedIn

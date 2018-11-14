@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  if errorflash
+    div(class='uk-alert-danger')=errorflash
+    
+  div(class="uk-tile")  
+    div(uk-grid, id="gallery" )
+        for file in files 
+          if file != "README"
+              a(href="/i/#{file}")
+                img(src="/i/#{file}", width=100, uk-img, alt=file)
+            
+      

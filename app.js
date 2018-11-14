@@ -49,6 +49,7 @@ var usersRouter = require('./routes/users')(passport, dbFunctions, config);
 var uploadRouter = require('./routes/upload')(passport, dbFunctions, config);
 var loginRouter = require('./routes/login')(passport, dbFunctions, config);
 var signupRouter = require('./routes/signup')(passport, dbFunctions, config);
+var galleryRouter = require('./routes/gallery')(passport, dbFunctions, config);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -71,6 +72,7 @@ app.use('/users', usersRouter);
 app.use('/upload', uploadRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
+app.use('/gallery', galleryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

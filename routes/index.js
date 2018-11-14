@@ -4,7 +4,7 @@ module.exports = function(passport, dbFunctions, config) {
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
-    res.render('index', { title: 'hasthe.moe', isLoggedIn: req.isAuthenticated() });
+    res.render('index', { title: 'Home', isLoggedIn: req.isAuthenticated() });
   });
 
   return router;

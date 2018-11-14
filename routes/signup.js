@@ -4,7 +4,7 @@ module.exports = function(passport, dbFunctions, config) {
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
-    res.render('signup', { title: 'hasthe.moe', isLoggedIn: req.isAuthenticated(), errorflash:req.flash('error'), successflash:req.flash('success') });
+    res.render('signup', { title: 'Sign up', isLoggedIn: req.isAuthenticated(), errorflash:req.flash('error'), successflash:req.flash('success') });
   });
 
   router.post('/', function(req, res, next) {
