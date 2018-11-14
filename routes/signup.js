@@ -4,6 +4,13 @@ module.exports = function(passport, dbFunctions, config) {
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
+    if(config.requireLoginToCreateAccounts) {
+      if(!req.isAuthenticated()) {
+        req.flash('error', "You must be signed in to create user accounts");
+        res.redirect("/login");
+        return;
+      }
+    }
     res.render('signup', { title: 'Sign up', isLoggedIn: req.isAuthenticated(), errorflash:req.flash('error'), successflash:req.flash('success') });
   });
 
@@ -12,6 +19,7 @@ module.exports = function(passport, dbFunctions, config) {
       if(!req.isAuthenticated()) {
         req.flash('error', "You must be signed in to create user accounts");
         res.redirect("/login");
+        return;
       }
     }
 
