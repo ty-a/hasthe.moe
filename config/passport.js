@@ -1,10 +1,11 @@
 var LocalStrategy = require('passport-local').Strategy;
 module.exports = function(passport, dbFunctions) {
   passport.use('local-login', new LocalStrategy({
-      session: true
+      session: true,
+      passReqToCallback: true
     },
-    function(username, password, done) {
-      dbFunctions.loginUser(username, password, done);
+    function(req, username, password, done) {
+      dbFunctions.loginUser(req, username, password, done);
     }
   ));
 

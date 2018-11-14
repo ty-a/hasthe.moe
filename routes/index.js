@@ -1,4 +1,4 @@
-module.exports = function(passport, dbFunctions) {
+module.exports = function(passport, dbFunctions, config) {
   var express = require('express');
   var router = express.Router();
 

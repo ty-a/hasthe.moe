@@ -3,8 +3,7 @@ var multer = require('multer');
 var fs = require('fs');
 var router = express.Router();
 const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var config = require('../config/config.json');
-module.exports = function(passport, dbFunctions) {
+module.exports = function(passport, dbFunctions, config) {
   function generateFileName() {
       var out = "";
       for(i = 0; i < 8; i++) {
@@ -12,8 +11,6 @@ module.exports = function(passport, dbFunctions) {
       }
 
       return out;
-
-
   }
 
   var storage = multer.diskStorage({

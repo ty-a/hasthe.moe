@@ -7,9 +7,31 @@ var passport = require('passport');
 var sqlite3 = require('sqlite3').verbose();
 var session = require('express-session');
 var SQLiteStore = require('connect-sqlite3')(session);
+var flash = require('connect-flash');
+
 var config = require('./config/config.json');
 
+
 var app = express();
+
+var sessionOptions = {
+  store: new SQLiteStore({dir:'./db/', db:'sessions.db'}),
+  secret: config.cookiesecret,
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    secure: false, // dev env is http
+    maxAge: 1000 * 60 * 60 * 24 * 7 // one week
+  }
+
+};
+
+if (app.get('env') === 'production') {
+  // we proxy through nginx
+  app.set('trust proxy', 1) // trust first proxy
+  sessionOptions.cookie.secure = true // serve secure cookies
+}
+
 let db = new sqlite3.Database('./db/db.sqlite3', function(err) {
   if(err) {
     console.log("Unable to open database. Please check file permissions.");
@@ -22,10 +44,11 @@ var dbFunctions = require('./includes/db.js')(db);
 
 require('./config/passport.js')(passport, dbFunctions);
 
-var indexRouter = require('./routes/index')(passport, dbFunctions);
-var usersRouter = require('./routes/users')(passport, dbFunctions);
-var uploadRouter = require('./routes/upload')(passport, dbFunctions);
-var loginRouter = require('./routes/login')(passport, dbFunctions);
+var indexRouter = require('./routes/index')(passport, dbFunctions, config);
+var usersRouter = require('./routes/users')(passport, dbFunctions, config);
+var uploadRouter = require('./routes/upload')(passport, dbFunctions, config);
+var loginRouter = require('./routes/login')(passport, dbFunctions, config);
+var signupRouter = require('./routes/signup')(passport, dbFunctions, config);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,26 +58,19 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({
-  store: new SQLiteStore({dir:'./db/', db:'sessions.db'}),
-  secret: config.cookiesecret,
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    secure: false, // dev env is http, check into https with prod
-    maxAge: 1000 * 60 * 60 * 24 * 7 // one week
-  }
+app.use(session(sessionOptions));
 
-}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/upload', uploadRouter);
 app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

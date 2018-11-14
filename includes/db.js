@@ -13,22 +13,22 @@ module.exports = function(db) {
       });
     },
 
-    loginUser: function(username, password, done) {
+    loginUser: function(req, username, password, done) {
       db.get('SELECT userName, userPassword, userId FROM users WHERE userName = ?', username, function(err, row) {
           if(err) {
             console.error(err);
-            return done(null, false);
+            return done(null, false, {message:"Database error"});
           }
 
           if(row == null) {
-            return done(null, false);
+            return done(null, false, {message:"User account doesn't exist."});
           }
 
           bcrypt.compare(password, row.userPassword, function(err, res) {
             if(res) { // match
               return done(null, {username: username, userId: row.userId});
             } else {
-              return done(null, false);
+              return done(null, false, {message:"Invalid password"});
             }
           });
 
@@ -36,31 +36,38 @@ module.exports = function(db) {
       return false;
     },
 
-    createUser: function(username, password) {
+    createUser: function(req, username, password, callback) {
       db.get('SELECT userName FROM users WHERE userName = ?', username, function(err, row) {
         if(!row) {
-          // user does not exist so continue
           bcrypt.genSalt(12, function(err, hash) {
             if(err) {
               console.error(err);
+              callback(false,'System error 1' );
               return false;
             }
             bcrypt.hash(password, hash, null, function(err, res) {
               if(err) {
-                console.log('error hashing password');
                 console.error(err);
+                callback(false, 'System error 2');
+                return false;
               }
               db.run('INSERT INTO users(userName, userPassword) VALUES(?,?)',
-                username,
-                res,
-                function(err, row) {
+                [username, res], // the hash
+                function(err) {;
                   if(err) {
                     console.error(err);
+                    callback(false, 'System error 3');
+                    return false;
                   }
+                  callback(true, 'I set the message in the template');
+                  return true;
                 }
               );
             });
           } );
+        } else {
+          callback(false, 'User account already exists');
+          return false;
         }
       });
     },

@@ -4,11 +4,16 @@ block content
   
   div(class='uk-width-medium uk-padding-small')
     form(method='post')
-      if errorflash
+
+      
+      if successflash
+        div(class='uk-alert-success')=successflash
+
+      if errorflash  
         div(class='uk-alert-danger')=errorflash
-        
+      
       fieldset(class='uk-fieldset')
-        legend(class='uk-legend') Login 
+        legend(class='uk-legend') Sign up 
         
         div(class='uk-margin')
           div(class='uk-inline')
@@ -21,5 +26,10 @@ block content
               input(class='uk-input uk-form-large', type='password', name='password', required)
               
           div(class='uk-margin')
-            button(type='submit', class='uk-button uk-button-primary uk-button-large uk-width-1-1') Login
+            div(class='uk-inline')
+              label(for='password2') Confirm Password
+              input(class='uk-input uk-form-large', type='password', name='password2', required)
+              
+          div(class='uk-margin')
+            button(type='submit', class='uk-button uk-button-primary uk-button-large uk-width-1-1') Create Account
           

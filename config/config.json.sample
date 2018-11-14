@@ -2,5 +2,6 @@
   "secretkey":"",
   "site": "http://hasthe.moe",
   "enableuploadform": false,
-  "cookiesecret": "secret lol"
+  "cookiesecret": "secret lol",
+  "requireLoginToCreateAccounts": true
 }
