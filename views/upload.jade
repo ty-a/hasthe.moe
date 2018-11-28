@@ -21,8 +21,4 @@ block content
       progress(id='js-progressbar', class='uk-progress', value='0', max='100', hidden)
     else 
       p The upload form is currently disabled. You can still use the /upload/2/ endpoint if you have a secret key.
-    //form(action="/upload", method="post", enctype="multipart/form-data", class="uk-panel uk-panel-box uk-form" )
-    //  div(class='uk-margin')
-    //    input(type="file", name='file', class='uk-input')
-    //  div(class='uk-margin')
-    //    input(type="submit", value="submit", class="uk-button uk-button-primary")
+    script(src="js/upload.js", type='text/javascript')

@@ -8,7 +8,11 @@ block content
     div(uk-grid, id="gallery" )
         for file in files 
           if file != "README"
+            div
               a(href="/i/#{file}")
                 img(src="/i/#{file}", width=100, uk-img, alt=file)
+              div(uk-drop)
+                button(class="uk-button uk-button-danger uk-button-small", style="width:100px", type="button", onclick="deleteFile('#{file}')") delete
             
       
+    script(src="js/delete.js", type='text/javascript')
