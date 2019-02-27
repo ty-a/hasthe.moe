@@ -3,5 +3,6 @@
   "site": "http://hasthe.moe",
   "enableuploadform": false,
   "cookiesecret": "secret lol",
-  "requireLoginToCreateAccounts": true
+  "requireLoginToCreateAccounts": true,
+  "gacode":""
 }

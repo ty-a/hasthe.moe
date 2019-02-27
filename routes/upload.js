@@ -46,7 +46,10 @@ module.exports = function(passport, dbFunctions, config) {
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
-    res.render('upload', { title: 'Upload', posted: false, enabled: config.enableuploadform, isLoggedIn: req.isAuthenticated()});
+    res.locals.viewsettings.title = "Upload";
+    res.locals.viewsettings.posted = false;
+    res.locals.viewsettings.enabled = config.enableuploadform;
+    res.render('upload', res.locals.viewsettings);
   });
 
   router.post('/2', function(req, res, next) {

@@ -4,7 +4,8 @@ module.exports = function(passport, dbFunctions, config) {
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
-    res.render('login', { title: 'Login', isLoggedIn: req.isAuthenticated(), errorflash:req.flash('error') });
+    res.locals.viewsettings.title = "Login";
+    res.render('login', res.locals.viewsettings);
   });
 
   router.post('/', passport.authenticate('local-login', {

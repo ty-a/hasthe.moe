@@ -68,6 +68,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+var viewdefault = require('./includes/viewdefaults.js');
+app.use(viewdefault({gacode: config.gacode}));
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/upload', uploadRouter);

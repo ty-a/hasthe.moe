@@ -4,7 +4,8 @@ module.exports = function(passport, dbFunctions, config) {
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Home', isLoggedIn: req.isAuthenticated() });
+    res.locals.viewsettings.title="Home"
+    res.render('index', res.locals.viewsettings);
   });
 
   return router;

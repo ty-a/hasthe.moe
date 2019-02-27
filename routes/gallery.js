@@ -12,14 +12,17 @@ module.exports = function(passport, dbFunctions, config) {
       return;
     }
 
+    res.locals.viewsettings.title = "Gallery";
+
     fs.readdir('./public/i/', function(err, files) {
       if(err) {
         req.flash('error', 'Unable to load gallery :(');
-        res.render('gallery', { title: 'Gallery', isLoggedIn: req.isAuthenticated(), errorflash:req.flash('error') });
+        res.render('gallery', res.locals.viewsettings);
         return;
       }
-
-      res.render('gallery', {title:'Gallery', isLoggedIn:req.isAuthenticated(), files:files});
+      res.locals.viewsettings.files = files;
+      res.render('gallery', res.locals.viewsettings);
+      //res.render('gallery', {title:'Gallery', isLoggedIn:req.isAuthenticated(), files:files});
       return;
     });
 

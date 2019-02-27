@@ -11,7 +11,8 @@ module.exports = function(passport, dbFunctions, config) {
         return;
       }
     }
-    res.render('signup', { title: 'Sign up', isLoggedIn: req.isAuthenticated(), errorflash:req.flash('error'), successflash:req.flash('success') });
+    res.locals.viewsettings.title = "Sign up";
+    res.render('signup', res.locals.viewsettings);
   });
 
   router.post('/', function(req, res, next) {

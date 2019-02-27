@@ -1,6 +1,15 @@
 doctype html
 html
   head
+    if GACode
+      script(async, src='https://www.googletagmanager.com/gtag/js?id=#{GACode}')
+      script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        gtag('config', '#{GACode}');
+      
     title #{title} - hasthe.moe
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.21/css/uikit.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
@@ -26,4 +35,3 @@ html
             
     div(class="uk-flex uk-flex-center uk-flex-middle uk-background-muted uk-height-viewport" ) 
       block content
-     
